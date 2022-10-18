@@ -25,12 +25,12 @@
 			{% if prediction%}
 			<p>Upload brain MRI image:</p>
 			{% else %}
-			<p>Upload an image of a brain MRI to get started:</p>
+			<p>Upload an JPG/JPEG image of a brain MRI to get started:</p>
 			{% endif %}
 			<form method="post" enctype="multipart/form-data">
 				{% csrf_token %}
 				<input type="file" name="{{ form.brain_scan_img.html_name }}"
-					id="{{ form.brain_scan_img.id_for_label }}" accept="image/*" required>
+					id="{{ form.brain_scan_img.id_for_label }}" accept=".jpeg .jpg" required onchange="validateFileType()" />
 				<button type="submit" class="btn btn-primary">Upload!</button>
 			</form>
 		</div>
@@ -67,5 +67,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
 	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 	crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    function validateFileType(){
+        var file = document.getElementById("{{ form.brain_scan_img.id_for_label }}");
+        var fileName = file.value;
+        var idxDot = fileName.lastIndexOf(".") + 1;
+        var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+        if (!(extFile=="jpg" || extFile=="jpeg")){
+            alert("Only jpg/jpeg file is allowed!");
+            file.value='';
+        }
+    }
+</script>
 
 </html>
