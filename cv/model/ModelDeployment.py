@@ -105,3 +105,27 @@ def get_prediction_from_image_upload(imageData):
     y = best_model.predict(X)
     
     return y[0][0], str(imageData), get_jpg_image(original_image)
+
+def get_prediction_from_image_upload_new(image_path):
+    # load all images in a directory
+    X = []
+    
+    # load the image
+    # np_buffer = np.frombuffer(imageData, np.uint8)
+    # image = cv2.imdecode(np_buffer, 128 | 1)
+    # image = Image.open(io.BytesIO(imageData.read()))
+    original_image = cv2.imread("media/"+str(image_path))
+    # crop the brain and ignore the unnecessary rest part of the image
+    image_cropped = crop_brain_contour(original_image, plot=False)
+    # resize image
+    image = cv2.resize(image_cropped, dsize=(240, 240), interpolation=cv2.INTER_CUBIC)
+    # normalize values
+    image = image / 255.
+    # convert image to numpy array and append it to X
+    X.append(image)
+    
+    X = np.array(X)
+    best_model = load_model(filepath='cv/model/cnn-parameters-improvement-23-0.91.model')
+    y = best_model.predict(X)
+    
+    return y[0][0], str(image_path), get_jpg_image(original_image)
