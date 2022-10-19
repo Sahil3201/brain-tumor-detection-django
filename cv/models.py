@@ -1,6 +1,6 @@
 from django.db import models
 
-class BrainScans(models.Model):  
+class BrainScans(models.Model):
     name        = models.CharField(max_length=200)
     image       = models.ImageField(upload_to='images')
     imageName   = models.CharField(max_length=200, editable=False, null=True, blank=True)
