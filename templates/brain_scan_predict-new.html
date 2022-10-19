@@ -46,8 +46,13 @@
 							{% endif %}
 							<form method="post" enctype="multipart/form-data">
 								{% csrf_token %}
-								{{ form.as_p }}
-								<button type="submit" class="btn btn-primary">Upload!</button>
+								<table class="table table-borderless">
+									{{ form.as_table }}
+									<tr>
+										<td></td>
+										<td><button type="submit" class="btn btn-primary">Upload!</button></td>
+									</tr>
+								</table>
 							</form>
 						</div>
 					</div>
@@ -134,7 +139,7 @@
 
 <script type="text/javascript">
 	function validateFileType() {
-		var file = document.getElementById("{{ form.brain_scan_img.id_for_label }}");
+		var file = document.getElementById("{{ form.image.id_for_label }}");
 		var fileName = file.value;
 		var idxDot = fileName.lastIndexOf(".") + 1;
 		var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
