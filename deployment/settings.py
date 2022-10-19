@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import os, sys
+sys.path.append('/home/sahlun01/.virtualenvs/env-brain-tumor-py3.8/lib/python3.8/site-packages') # Change the path as per your username and directory structure
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
