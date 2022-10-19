@@ -20,23 +20,23 @@ def crop_brain_contour(image, plot=False):
     cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
     c = max(cnts, key=cv2.contourArea)
-    
+
 
     # Find the extreme points
     extLeft = tuple(c[c[:, :, 0].argmin()][0])
     extRight = tuple(c[c[:, :, 0].argmax()][0])
     extTop = tuple(c[c[:, :, 1].argmin()][0])
     extBot = tuple(c[c[:, :, 1].argmax()][0])
-    
+
     # crop new image out of the original image using the four extreme points (left, right, top, bottom)
-    new_image = image[extTop[1]:extBot[1], extLeft[0]:extRight[0]]    
+    new_image = image[extTop[1]:extBot[1], extLeft[0]:extRight[0]]
     return new_image
 
 ############################################################
 
 # def load_data(filename, image_size):
 #     """
-#     Read images, resize and normalize them. 
+#     Read images, resize and normalize them.
 #     Arguments:
 #         dir_list: list of strings representing file directories.
 #     Returns:
@@ -47,7 +47,7 @@ def crop_brain_contour(image, plot=False):
 #     # load all images in a directory
 #     X = []
 #     image_width, image_height = image_size
-    
+
 #     # load the image
 #     image = cv2.imread(filename)
 #     # crop the brain and ignore the unnecessary rest part of the image
@@ -58,9 +58,9 @@ def crop_brain_contour(image, plot=False):
 #     image = image / 255.
 #     # convert image to numpy array and append it to X
 #     X.append(image)
-    
+
 #     X = np.array(X)
-    
+
 #     return X
 
 # ############################################################
@@ -84,7 +84,7 @@ def get_jpg_image(imageData):
 def get_prediction_from_image_upload(imageData):
         # load all images in a directory
     X = []
-    
+
     # load the image
     # np_buffer = np.frombuffer(imageData, np.uint8)
     # image = cv2.imdecode(np_buffer, 128 | 1)
@@ -99,22 +99,22 @@ def get_prediction_from_image_upload(imageData):
     image = image / 255.
     # convert image to numpy array and append it to X
     X.append(image)
-    
+
     X = np.array(X)
     best_model = load_model(filepath='cv/model/cnn-parameters-improvement-23-0.91.model')
     y = best_model.predict(X)
-    
+
     return y[0][0], str(imageData), get_jpg_image(original_image)
 
 def get_prediction_from_image_upload_new(image_path):
     # load all images in a directory
     X = []
-    
+
     # load the image
     # np_buffer = np.frombuffer(imageData, np.uint8)
     # image = cv2.imdecode(np_buffer, 128 | 1)
     # image = Image.open(io.BytesIO(imageData.read()))
-    original_image = cv2.imread("media/"+str(image_path))
+    original_image = cv2.imread(str(image_path))
     # crop the brain and ignore the unnecessary rest part of the image
     image_cropped = crop_brain_contour(original_image, plot=False)
     # resize image
@@ -123,9 +123,9 @@ def get_prediction_from_image_upload_new(image_path):
     image = image / 255.
     # convert image to numpy array and append it to X
     X.append(image)
-    
+
     X = np.array(X)
-    best_model = load_model(filepath='cv/model/cnn-parameters-improvement-23-0.91.model')
+    best_model = load_model(filepath="/home/sahlun01/brain-tumor-detection-django/cv/model/cnn-parameters-improvement-23-0.91.model")
     y = best_model.predict(X)
-    
+
     return y[0][0], str(image_path), get_jpg_image(original_image)

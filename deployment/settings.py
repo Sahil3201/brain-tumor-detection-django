@@ -17,6 +17,8 @@ sys.path.append('/home/sahlun01/.virtualenvs/env-brain-tumor-py3.8/lib/python3.8
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print("BASEDIR:!!!!!!!!!!!!!!!!!")
+print(BASE_DIR)
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 

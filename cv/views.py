@@ -39,19 +39,18 @@ def getPredictionsNew(request):
         form = BrainScansFormNew(request.POST, request.FILES)
 
         if form.is_valid():
-            filename = form.instance.image.file.name
             form.save()
-            print(form.instance.image.file.name)
-            prediction, imageName, original_image = ModelDeployment.get_prediction_from_image_upload_new(form.instance.image)
+            filename = form.instance.image.file.name
+            prediction, imageName, original_image = ModelDeployment.get_prediction_from_image_upload_new(form.instance.image.file.name)
             form.instance.prediction = round(prediction*100,2)
-            form.instance.imageName = filename
+            form.instance.imageName = str(request.FILES['image']) #filename
             form.save()
 
             form = BrainScansFormNew()
             return render(request, 'brain_scan_predict-new.html',
             {'form' : form,
             "prediction": round(prediction*100,2),
-            "imageName": str(filename),
+            "imageName": str(request.FILES['image']), # str(filename),
             'original_image': original_image.decode('utf-8'),
             "last_prediction": last_prediction}
             )
