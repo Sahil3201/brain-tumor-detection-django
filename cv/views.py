@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic.list import ListView
+
 from .model import ModelDeployment
 from .forms import *
+from .models import BrainScans
 
 def index(request):
     return HttpResponse("<h1>Hello, world. You're at the cv index.</h1><h3>Try to use paths:<br>- /predict</h3>")
@@ -30,6 +33,8 @@ def getPredictions(request):
         return render(request, 'brain_scan_predict.html', {'form' : form})
 
 def getPredictionsNew(request):
+    last_prediction = BrainScans.objects.last()
+
     if request.method == 'POST':
         form = BrainScansFormNew(request.POST, request.FILES)
 
@@ -47,23 +52,20 @@ def getPredictionsNew(request):
             {'form' : form,
             "prediction": round(prediction*100,2),
             "imageName": str(filename),
-            'original_image': original_image.decode('utf-8')}
+            'original_image': original_image.decode('utf-8'),
+            "last_prediction": last_prediction}
             )
     else:
         form = BrainScansFormNew()
-        return render(request, 'brain_scan_predict-new.html', {'form' : form})
+        return render(request, 'brain_scan_predict-new.html',
+        {'form' : form,
+            "last_prediction": last_prediction})
 
-# def image_request(request):  
-#     if request.method == 'POST':  
-#         form = BrainScansForm(request.POST, request.FILES)  
-#         if form.is_valid():  
-#             form.save()
-  
-#             # Getting the current instance object to display in the template  
-#             img_object = form.instance  
-              
-#             return render(request, 'image_form.html', {'form': form, 'img_obj': img_object})  
-#     else:  
-#         form = BrainScansForm()  
-  
-#     return render(request, 'image_form.html', {'form': form})  
+class BrainScansListView(ListView):
+
+    model = BrainScans
+    paginate_by = 100  # if pagination is desired
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context
