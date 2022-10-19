@@ -53,8 +53,9 @@
 					</div>
 					<div class="col-6 col-md-auto col-sm-auto">
 						<div class="p-3 border bg-dark">
-							<h5 class="display-5 font-weight-bold">History</h5>
+							<h5 class="display-5 font-weight-bold">Last submission</h5>
 							<hr class="bg-light border-2 border-top border-light">
+							{% if last_prediction %}
 							<table class="table table-borderless">
 								<tbody>
 									<tr>
@@ -70,7 +71,7 @@
 									<tr>
 										<td>Prediction</td>
 										<td>:</td>
-										<td>{{ last_prediction.prediction }}</td>
+										<td>{{ last_prediction.prediction }} %</td>
 									</tr>
 									<tr>
 										<td>Timestamp</td>
@@ -85,6 +86,9 @@
 									</tr>
 								</tbody>
 							</table>
+							{% else %}
+							No records found!<br><br>
+							{% endif %}
 							<a href="../history" class="btn btn-light stretched-link">View full history &rarr;</a>
 
 						</div>

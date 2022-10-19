@@ -102,7 +102,7 @@ def get_prediction_from_image_upload(imageData):
     X.append(image)
 
     X = np.array(X)
-    best_model = load_model(filepath='cv/model/cnn-parameters-improvement-23-0.91.model')
+    best_model = load_model(filepath=os.path.join(settings.BASE_DIR, "cv/model/cnn-parameters-improvement-23-0.91.model"))
     y = best_model.predict(X)
 
     return y[0][0], str(imageData), get_jpg_image(original_image)
