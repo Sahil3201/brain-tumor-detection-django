@@ -1,8 +1,9 @@
-import cv2
+import cv2, os
 import numpy as np
 from tensorflow.keras.models import load_model
 import imutils
 import base64
+from django.conf import settings
 
 ############################################################
 def crop_brain_contour(image, plot=False):
@@ -125,7 +126,7 @@ def get_prediction_from_image_upload_new(image_path):
     X.append(image)
 
     X = np.array(X)
-    best_model = load_model(filepath="/home/sahlun01/brain-tumor-detection-django/cv/model/cnn-parameters-improvement-23-0.91.model")
+    best_model = load_model(filepath=os.path.join(settings.BASE_DIR, "cv/model/cnn-parameters-improvement-23-0.91.model"))
     y = best_model.predict(X)
 
     return y[0][0], str(image_path), get_jpg_image(original_image)
