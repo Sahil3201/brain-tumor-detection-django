@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['*'] # TODO Not safe
 # Application definition
 
 INSTALLED_APPS = [
+    'cv.apps.CvConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
