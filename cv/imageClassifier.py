@@ -1,9 +1,10 @@
 import numpy as np
 from tensorflow import keras
 from tensorflow.keras.preprocessing.image import load_img
+import os
 
 # class_names = ['mri', 'no-mri']
-model_path = 'cv/image-classifier-models/image-classifier-model-2'
+model_path = os.path.join(settings.BASE_DIR, 'cv/image-classifier-models/image-classifier-model-2')
 
 def get_class_of_image(img_path):
   model = keras.models.load_model(model_path)
