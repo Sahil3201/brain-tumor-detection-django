@@ -94,6 +94,7 @@ def getPredictionsNewWithImgClassifier(request):
             if isMri:
                 form.save()
             else:
+                prediction = False
                 form.instance.delete()
 
             form = BrainScansFormNew()

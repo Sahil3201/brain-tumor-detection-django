@@ -23,6 +23,10 @@
 			font-family: 'Play', sans-serif;
 			font-weight: 800;
 		}
+
+		html {
+			scroll-behavior: smooth;
+		}
 	</style>
 
 	<title>Brain Tumor Detection</title>
@@ -105,21 +109,20 @@
 	{% if isNotMri %}
 	<div class="container-fluid bg-danger text-light p-1">
 		<div class="container bg-danger p-1">
-			<h5 class="display-7 font-weight-bold">Warning! This image doesn't look like a MRI scan and will not be
-				saved to the database.</h5>
+			<h5 class="display-7 font-weight-bold">Warning! The uploaded image doesn't look like a MRI scan.</h5>
 		</div>
 	</div>
 	{% endif %}
 
 	{% if prediction %}
-	<div class="jumbotron">
+	<div class="jumbotron" id="prediction">
 		<div class="container">
 			<h1 class="display-7 font-weight-light">The likelihood of a brain tumor is:</h1>
 			<h1 class="display-1 font-weight-bold">
 				<bold>{{ prediction }} %</bold>
 			</h1>
 			<hr class="my-4">
-			<img src="data:image/jpeg;base64, {{original_image}}" style="max-width:600px;"></img>
+			<img src="data:image/jpeg;base64, {{original_image}}" id="image" style="max-width:600px;"></img>
 			<br>
 			<p>{{imageName}}</p>
 		</div>
@@ -133,7 +136,6 @@
 		<button type="submit" class="btn btn-primary">Upload</button>
 	</form> -->
 	{% endcomment %}
-
 
 </body>
 <!-- JavaScript Bundle with Popper -->
@@ -153,5 +155,12 @@
 		}
 	}
 </script>
+{% if prediction %}
+<script>
+	window.addEventListener('load', function (event) {
+		document.getElementById('prediction').scrollIntoView();
+	});
+</script>
+{% endif %}
 
 </html>
