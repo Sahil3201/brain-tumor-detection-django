@@ -7,8 +7,8 @@ from .forms import *
 from .models import BrainScans
 from . import imageClassifier
 
-def index(request):
-    return HttpResponse("<h1>Hello, world. You're at the cv index.</h1><h3>Try to use paths:<br>- /predict</h3>")
+# def index(request):
+#     return HttpResponse("<h1>Hello, world. You're at the cv index.</h1><h3>Try to use paths:<br>- /predict</h3>")
 
 def getPredictions(request):
     if request.method == 'POST':
